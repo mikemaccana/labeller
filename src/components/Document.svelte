@@ -49,14 +49,21 @@
     // https://developer.mozilla.org/en-US/docs/Web/API/Selection
     const selection = window.getSelection()
 
+    if ( selection.isCollapsed ) {
+      isTextSelected = false
+      return
+    }
+
     isTextSelected = true
 
+    // the anchor is placed where you pressed the mouse button, 
+    // and the focus is placed where you released the mouse button.
     // Focus can be before anchor (if we select backwards from cursor)
     const start = Math.min(selection.anchorOffset, selection.focusOffset)
     const end = Math.max(selection.anchorOffset, selection.focusOffset)
     selectionStart = start
     selectionEnd = end
-    selectedText = selection.toString()
+    selectedText = selection.toString().trim()
 
     // https://developer.mozilla.org/en-US/docs/Web/API/Document/createRange
     const parentElement = selection.anchorNode
@@ -106,8 +113,9 @@
       }]
     })
 
-    log(`Key ${key} was pressed and text is selected. Create annotation...`, annotation)
+    log(`Key ${key} was pressed and text is selected. Created annotation...`, annotation)
 
+    // Push new annotation to the annotation store
     annotations.update((currentAnnotations) => {
       return [...currentAnnotations, annotation]
     })

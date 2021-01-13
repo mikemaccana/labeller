@@ -4,11 +4,11 @@ A tool for labelling named entities in text.
 
 ## Layout
 
-The app uses TypeScript and Svelte. CSS is plain CSS grid and variables.
+The app uses TypeScript and Svelte. 
 
- - Global CSS (eg colors, layout settings) is in `public/global.css`
  - Components are in `src/components` - `.svelte` files contain all the HTML / CSS / JS for the component.
  - The store (which handles global state) is `src/store.ts` 
+ - Global CSS (eg colors, layout settings) is in `public/global.css`. CSS is plain CSS grid and variables. 
 ## Get started
 
 Install the dependencies...
