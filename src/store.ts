@@ -20,13 +20,8 @@ export interface Annotation {
   end: number;
   text: string;
   label: Label;
-  // Extra hidden field for the highlight coordinates
-  _position: {
-    top: number;
-    bottom: number;
-    left: number;
-    right: number;
-  };
+  // Extra hidden field
+  _highLightPositions: any[];
 }
 
 export const text = `After bowling Somerset out for 83 on the opening morning at Grace Road, Leicestershire extended their first innings by 94 runs before being bowled out for 296 with England discard Andy Caddick taking three for 83.`;

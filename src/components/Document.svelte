@@ -8,7 +8,7 @@
   let selectionStart
   let selectionEnd
   let selectedText
-  let highlightRectangle;
+  let highlightRectangles: any[];
 
   const VALID_KEYS = ['Escape', 'KeyO', 'KeyP', 'KeyL', 'KeyM']
 
@@ -50,9 +50,9 @@
     range.setEnd(parentElement, end);
     // These rects contain the client coordinates in top, left
     const rects = range.getClientRects();
-    const firstRectangle = rects[0];
-
-    highlightRectangle = firstRectangle
+    // Convert to an array instead of DOMRectList
+    highlightRectangles = [...rects]
+    log(`highlightRectangles are`, highlightRectangles)
   }
 
   document.addEventListener('keyup', function(event){
@@ -76,13 +76,22 @@
       end: selectionEnd,
       text: selectedText,
       label: LABELS_FOR_KEYS[key],
-      _position: {
+      _highLightPositions: []
+    }
+
+    highlightRectangles.forEach((highlightRectangle) => {
+      annotation._highLightPositions = [...highlightRectangles, {
+        // https://developer.mozilla.org/en-US/docs/Web/API/DOMRect
         top: Math.round(highlightRectangle.top),
         bottom: Math.round(highlightRectangle.bottom),
+        width: Math.round(highlightRectangle.width),
+        height: Math.round(highlightRectangle.height),
         left: Math.round(highlightRectangle.left),
         right: Math.round(highlightRectangle.right),
-      }
-    }
+      }]
+    })
+
+    
 
     log(`Key ${key} was pressed and text is selected. Create annotation...`, annotation)
 
@@ -116,8 +125,8 @@
 
   :global(.annotation) {
     background-color: red;
-    width: 20px;
-    height: 20px;
+    
+
   }
   
 </style>
@@ -128,14 +137,17 @@
     <p class="text">{text}</p>
     <h1>{highlights.length} annotation highlights</h1>
     {#each highlights as highlight, index}
-      <div class="annotation" style="
-        position: absolute; 
-        top: {highlight._position.top}px; 
-        
-        left: {highlight._position.left}px; 
-      ">
+      {#each highlight._highLightPositions as highlightPosition, index}
+        <div class="annotation" style="
+          position: absolute; 
+          top: {highlightPosition.top - 95}px; 
+          left: {highlightPosition.left - 165}px; 
+          width: {highlightPosition.width}px; 
+          height: {highlightPosition.height}px; 
+        ">{highlight.text}
 
-      </div>
+        </div>
+      {/each}
     {/each}
   </article>
 </section>
