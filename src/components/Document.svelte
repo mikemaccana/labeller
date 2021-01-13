@@ -1,5 +1,15 @@
 <script lang="ts">
-  import { document, annotations } from '../store';
+  import { text, annotations } from '../store';
+  const log = console.log.bind(console)
+
+  function getSelection(event){
+    // https://developer.mozilla.org/en-US/docs/Web/API/Selection
+    const selection = window.getSelection()
+    const start = selection.anchorOffset
+    const end = selection.focusOffset
+    log(`Selected \n"${selection}"\n from ${start} to ${end}`)
+  }
+  
 </script>
 
 <style>
@@ -19,6 +29,6 @@
   
 </style>
 
-<article>
-  <p>{document}</p>
+<article on:mouseup={getSelection}>
+  <p>{text}</p>
 </article>
