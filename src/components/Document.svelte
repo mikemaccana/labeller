@@ -19,6 +19,9 @@
     'KeyM': Label.Misc, 
   }
 
+  const COLORS_FOR_KEYS = {}
+  COLORS_FOR_KEYS[Label.Organisation] = ''
+
   let highlights: Annotation[];
 
 	annotations.subscribe(value => {
@@ -91,8 +94,6 @@
       }]
     })
 
-    
-
     log(`Key ${key} was pressed and text is selected. Create annotation...`, annotation)
 
     annotations.update((currentAnnotations) => {
@@ -124,8 +125,8 @@
   }
 
   :global(.annotation) {
+    opacity: 0.5;
     background-color: red;
-    
 
   }
   
@@ -144,7 +145,7 @@
           left: {highlightPosition.left - 165}px; 
           width: {highlightPosition.width}px; 
           height: {highlightPosition.height}px; 
-        ">{highlight.text}
+        ">{highlight.label}
 
         </div>
       {/each}

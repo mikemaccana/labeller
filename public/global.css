@@ -4,6 +4,16 @@ html, body {
 	height: 100%;
 }
 
+:root {
+	--lavendar:#392bb0;
+	--lavendar-light:#dad5ff;
+	--orange:#d37912;
+	--orange-light:#ffe9d5;
+	--pink:#e34bf1;
+	--pink-light:#f7d5ff;
+	--mint:#41b02b;
+	--mint-light:#e6ffd5;
+}
 
 /* https://www.paulirish.com/2012/box-sizing-border-box-ftw/ */
 html {
@@ -12,6 +22,8 @@ html {
 *, *:before, *:after {
   box-sizing: inherit;
 }
+
+
 
 body {
 	color: #333;
