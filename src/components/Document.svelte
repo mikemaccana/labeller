@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Label, text } from '../store';
+  import { annotations, Label, text } from '../store';
   import type {Annotation} from '../store';
   const log = console.log.bind(console)
 
@@ -18,6 +18,12 @@
     'KeyL': Label.Location,  
     'KeyM': Label.Misc, 
   }
+
+  let highlights: Annotation[];
+
+	annotations.subscribe(value => {
+		highlights = value;
+	});
 
   function clearSelection(){
     window.getSelection().empty()
@@ -69,21 +75,23 @@
       start: selectionStart,
       end: selectionEnd,
       text: selectedText,
-      label: LABELS_FOR_KEYS[key]
+      label: LABELS_FOR_KEYS[key],
+      _position: {
+        top: Math.round(highlightRectangle.top),
+        bottom: Math.round(highlightRectangle.bottom),
+        left: Math.round(highlightRectangle.left),
+        right: Math.round(highlightRectangle.right),
+      }
     }
 
     log(`Key ${key} was pressed and text is selected. Create annotation...`, annotation)
 
+    annotations.update((currentAnnotations) => {
+      return [...currentAnnotations, annotation]
+    })
+
     clearSelection()
   })
-
-    
-
-    
-
-    // Get position of selection? 
-    // Or style based on actual word?
-    // window.getSelection().removeAllRanges();
   
   
 </script>
@@ -92,6 +100,7 @@
   /* Stolen from medium.com */
   article {
     font-family: charter, Georgia, Cambria, "Times New Roman", Times, serif;
+    position: relative;
   }
 
   p.text {
@@ -104,13 +113,29 @@
     margin-top: 2em;
     line-height: 32px;
   }
+
+  :global(.annotation) {
+    background-color: red;
+    width: 20px;
+    height: 20px;
+  }
   
 </style>
 
 <section class="instructions-and-document">
   <p>Use the mouse to select text to annotate, and press one of these keys to label it</p>
   <article on:mouseup={updateSelection}>
-  
     <p class="text">{text}</p>
+    <h1>{highlights.length} annotation highlights</h1>
+    {#each highlights as highlight, index}
+      <div class="annotation" style="
+        position: absolute; 
+        top: {highlight._position.top}px; 
+        
+        left: {highlight._position.left}px; 
+      ">
+
+      </div>
+    {/each}
   </article>
 </section>
