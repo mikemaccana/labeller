@@ -2,12 +2,33 @@
   import { text, annotations } from '../store';
   const log = console.log.bind(console)
 
+  var textWithAnnotations = text
+
   function getSelection(event){
     // https://developer.mozilla.org/en-US/docs/Web/API/Selection
     const selection = window.getSelection()
-    const start = selection.anchorOffset
-    const end = selection.focusOffset
+
+    // Focus can be before anchor (if we select backwards from cursor)
+    const start = Math.min(selection.anchorOffset, selection.focusOffset)
+    const end = Math.max(selection.anchorOffset, selection.focusOffset)
     log(`Selected \n"${selection}"\n from ${start} to ${end}`)
+
+    // https://stackoverflow.com/questions/5143534/how-to-get-the-position-of-text-within-an-element
+    const parentElement = selection.anchorNode
+    const range = document.createRange();
+    range.setStart(parentElement, start);
+    range.setEnd(parentElement, end);
+    // These rects contain the client coordinates in top, left
+    const rects = range.getClientRects();
+    const firstRectangle = rects[0]
+
+    const { top, bottom, left, right } = { firstRectangle }
+
+    
+
+    // Get position of selection? 
+    // Or style based on actual word?
+    // window.getSelection().removeAllRanges();
   }
   
 </script>
@@ -18,6 +39,7 @@
   }
 
   p {
+    /* Stolen from medium.com */
     color: rgba(41, 41, 41, 1);
     word-break: break-word;
     margin-bottom: -0.46em;
@@ -31,4 +53,5 @@
 
 <article on:mouseup={getSelection}>
   <p>{text}</p>
+  <!-- <p>{textWithAnnotations}</p> -->
 </article>

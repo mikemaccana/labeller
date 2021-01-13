@@ -12,7 +12,7 @@
 
 	:root {
 		--single-column-text-max: 850px;
-		--labeller-width: 250px;
+		--labeller-width: 300px;
 	}
 	main {
 		text-align: center;
