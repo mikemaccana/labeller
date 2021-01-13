@@ -18,8 +18,7 @@
     font-size: 16pt;
     display: grid;
     grid-auto-flow: column;
-    grid-template-columns: 64px auto; 
-    grid-gap: 12px;
+    grid-template-columns: 70px auto; 
   }
 
   .key {
@@ -28,7 +27,8 @@
     justify-items: center;
     font-weight: 600;
     border-radius: 4px;
-    border: 2px solid grey;
+    border-style: solid;
+    border-width: 2px;
     margin: 12px;
   }
   .label p {
@@ -53,7 +53,7 @@
   
   {#each labelNames as labelName, index}
     <div class="label" style="color: var(--{labelColors[labelName]}); background-color: var(--{labelColors[labelName]}-light); ">
-      <span class="key">{labelKeys[labelName]}</span> 
+      <span class="key" style="border-color: var(--{labelColors[labelName]});">{labelKeys[labelName]}</span> 
       <p>{labelName} <span class="color">{labelColors[labelName]}</span></p>
     </div>
   {/each}

@@ -5,15 +5,15 @@ import type ObjectLiteral from "./object-literal";
 
 // Labels and names from https://github.com/humanloop/frontend-test/blob/master/README.md
 
-// Eg
-// [{"start": 12, "end": 30, "text": "Southampton United", label: 'organization'},]
-
 export enum Label {
   Person = "person",
   Organisation = "organization",
   Location = "location",
   Misc = "misc",
 }
+
+// Eg
+// [{"start": 12, "end": 30, "text": "Southampton United", label: 'organization'},]
 
 export interface Annotation {
   start: number;

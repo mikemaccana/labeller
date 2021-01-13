@@ -161,6 +161,9 @@
   .annotation {
     /* https://css-tricks.com/basics-css-blend-modes/ */
     mix-blend-mode: multiply;
+    /* Make highlight slightly bigger than words */
+    transform: scale(1.03);
+    border-radius: 4px;
   }
 
   .annotation button {
