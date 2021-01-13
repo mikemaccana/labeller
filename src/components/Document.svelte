@@ -2,6 +2,7 @@
   import { annotations, Label, text } from '../store';
   import type {Annotation} from '../store';
   import { labelColors } from '../constants';
+  import { onMount } from 'svelte';
   const log = console.log.bind(console)
 
   let isTextSelected = false
@@ -26,11 +27,18 @@
   });
   
   // UI offsets for highlights
-  // TODO: calculate dynamically
-  const X_OFFSET = 165
-  const Y_OFFSET = 95
-  // Add a little extra width to
-  const EXTRA_WIDTH = 2
+  let X_OFFSET = 0; 
+  let Y_OFFSET = 0; 
+  onMount(() => {
+    // Oddly enough, individual DOM Range items have getClientRects() for absolute coordinates,
+    // which handles ranges that span multiple lines, and getBoundingClientRect() for relative 
+    // coordinates that span a single line - but nothing for relative coordinates
+    // that span multiple lines!
+    // So lets offset everything, so highlights are in the correct position 
+    const articlePosition = document.querySelector('article').getBoundingClientRect()
+    X_OFFSET = Math.round(articlePosition.x)
+    Y_OFFSET = Math.round(articlePosition.y)
+  });
 
   function clearSelection(){
     window.getSelection().empty()
@@ -145,7 +153,7 @@
           position: absolute; 
           top: {highlightPosition.top - Y_OFFSET}px; 
           left: {highlightPosition.left - X_OFFSET}px; 
-          width: {highlightPosition.width + EXTRA_WIDTH}px; 
+          width: {highlightPosition.width}px; 
           height: {highlightPosition.height}px; 
           color: var(--{labelColors[highlight.label]}); 
           background-color: var(--{labelColors[highlight.label]}-light); 
