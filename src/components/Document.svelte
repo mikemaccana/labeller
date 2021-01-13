@@ -50,6 +50,18 @@
       return
     }
 
+    selectedText = selection.toString()
+    if (selectedText.endsWith(' ') ) {
+      // Selection by clicking will always be 'word ' 
+      // so let's modify the selection so it's 'word'
+      // See https://developer.mozilla.org/en-US/docs/Web/API/Selection/modify
+      // Note this is non-standard
+      // hence the...
+      // @ts-ignore
+      selection.modify('extend', 'backward', 'character');
+      selectedText = selection.toString()
+    }
+
     isTextSelected = true
 
     // the anchor is placed where you pressed the mouse button, 
@@ -59,7 +71,7 @@
     const end = Math.max(selection.anchorOffset, selection.focusOffset)
     selectionStart = start
     selectionEnd = end
-    selectedText = selection.toString().trim()
+    
 
     // https://developer.mozilla.org/en-US/docs/Web/API/Document/createRange
     const parentElement = selection.anchorNode
