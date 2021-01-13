@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Document from "./Document.svelte" 
 	import Labeller from "./Labeller.svelte" 
+	
 </script>
 
 <main>

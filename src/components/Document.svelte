@@ -134,7 +134,6 @@
   <p>Use the mouse to select text to annotate, and press one of these keys to label it</p>
   <article on:mouseup={updateSelection}>
     <p class="text">{text}</p>
-    <h1>{highlights.length} annotation highlights</h1>
     {#each highlights as highlight, index}
       {#each highlight._highLightPositions as highlightPosition, index}
         <div class="annotation" style="

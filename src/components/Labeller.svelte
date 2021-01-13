@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Exporter from "./Exporter.svelte" 
   import { labelKeys, labelColors } from '../constants';
   import { annotations, Label } from '../store';
   const labelNames = Object.values(Label);
@@ -56,4 +57,7 @@
       <p>{labelName} <span class="color">{labelColors[labelName]}</span></p>
     </div>
   {/each}
+
+  
+	<Exporter />
 </div>
