@@ -21,11 +21,6 @@
     'KeyM': Label.Misc, 
   }
 
-  let highlights: Annotation[];
-	annotations.subscribe(value => {
-		highlights = value;
-  });
-  
   // UI offsets for highlights
   let X_OFFSET = 0; 
   let Y_OFFSET = 0; 
@@ -34,7 +29,7 @@
     // which handles ranges that span multiple lines, and getBoundingClientRect() for relative 
     // coordinates that span a single line - but nothing for relative coordinates
     // that span multiple lines!
-    // So lets offset everything, so highlights are in the correct position 
+    // So let's offset everything, so highlights are in the correct position 
     const articlePosition = document.querySelector('article').getBoundingClientRect()
     X_OFFSET = Math.round(articlePosition.x)
     Y_OFFSET = Math.round(articlePosition.y)
@@ -50,6 +45,7 @@
     const selection = window.getSelection()
 
     if ( selection.isCollapsed ) {
+      // Nothing is highlighted
       isTextSelected = false
       return
     }
@@ -75,6 +71,14 @@
     // Convert to an array instead of DOMRectList
     highlightRectangles = [...rects]
     log(`highlightRectangles are`, highlightRectangles)
+  }
+
+  function deleteAnnotation(index: number){
+    log(`Deleting annotation ${index}`)
+    annotations.update((currentValue) => {
+      currentValue.splice(index, 1)
+      return currentValue;
+    })
   }
 
   document.addEventListener('keyup', function(event){
@@ -133,8 +137,7 @@
     position: relative;
   }
 
-  p.text {
-    
+  p.text { 
     color: rgba(41, 41, 41, 1);
     word-break: break-word;
     margin-bottom: -0.46em;
@@ -143,10 +146,25 @@
     margin-top: 2em;
     line-height: 32px;
   }
-
-  :global(.annotation) {
+  .annotation {
     /* https://css-tricks.com/basics-css-blend-modes/ */
     mix-blend-mode: multiply;
+  }
+
+  .annotation button {
+    line-height: 10px; 
+    font-size: 10px;
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    margin: 0;
+    padding: 0 0 1px 0;
+    position: absolute;
+    right: -5px;
+    top: -5px;
+    display: grid;
+    justify-content: center;
+    align-content: center;
   }
   
 </style>
@@ -155,17 +173,19 @@
   <p>Use the mouse to select text to annotate, and press one of these keys to label it</p>
   <article on:mouseup={updateSelection}>
     <p class="text">{text}</p>
-    {#each highlights as highlight, index}
-      {#each highlight._highLightPositions as highlightPosition, index}
+    {#each $annotations as annotation, annotationIndex}
+      {#each annotation._highLightPositions as highlightPosition}
         <div class="annotation" style="
           position: absolute; 
           top: {highlightPosition.top - Y_OFFSET}px; 
           left: {highlightPosition.left - X_OFFSET}px; 
           width: {highlightPosition.width}px; 
           height: {highlightPosition.height}px; 
-          color: var(--{labelColors[highlight.label]}); 
-          background-color: var(--{labelColors[highlight.label]}-light); 
-        ">
+          color: var(--{labelColors[annotation.label]}); 
+          background-color: var(--{labelColors[annotation.label]}-light); 
+        "
+        >
+          <button on:click={() => deleteAnnotation(annotationIndex)}>×</button>
 
         </div>
       {/each}
