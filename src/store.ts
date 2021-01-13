@@ -7,12 +7,6 @@ import type ObjectLiteral from "./object-literal";
 
 // Eg
 // [{"start": 12, "end": 30, "text": "Southampton United", label: 'organization'},]
-export interface Annotation {
-  start: number;
-  end: number;
-  text: string;
-  label: Label;
-}
 
 export enum Label {
   Person = "person",
@@ -21,6 +15,13 @@ export enum Label {
   Misc = "misc",
 }
 
+export interface Annotation {
+  start: number;
+  end: number;
+  text: string;
+  label: Label;
+}
+
 export const text = `After bowling Somerset out for 83 on the opening morning at Grace Road , Leicestershire extended their first innings by 94 runs before being bowled out for 296 with England discard Andy Caddick taking three for 83 .`;
 
-export const annotations = writable(new Array<Label>());
+export const annotations = writable(new Array<Annotation>());
