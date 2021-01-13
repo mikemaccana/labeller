@@ -38,7 +38,7 @@
     font-family: charter, Georgia, Cambria, "Times New Roman", Times, serif;
   }
 
-  p {
+  p.text {
     /* Stolen from medium.com */
     color: rgba(41, 41, 41, 1);
     word-break: break-word;
@@ -51,7 +51,10 @@
   
 </style>
 
-<article on:mouseup={getSelection}>
-  <p>{text}</p>
-  <!-- <p>{textWithAnnotations}</p> -->
-</article>
+<section class="instructions-and-document">
+  <p>Use the mouse to select text to annotate, and press one of these keys to label it</p>
+  <article on:mouseup={updateSelection} on:keyup={annotateCurrentSelection}>
+  
+    <p class="text">{text}</p>
+  </article>
+</section>

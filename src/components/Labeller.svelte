@@ -113,7 +113,7 @@
 
 <div class="labeller">
   <h2>Labels</h2>
-  <p>Select the text you'd like to annotate, and press one of the keys below to annotate it</p>
+  
   {#each labelNames as labelName, index}
     <div class="label {labelName}">
       <span class="key">{labelKeys[labelName]}</span> 
