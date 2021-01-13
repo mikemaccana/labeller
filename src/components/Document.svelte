@@ -125,7 +125,8 @@
   }
 
   :global(.annotation) {
-    opacity: 0.5;
+    /* https://css-tricks.com/basics-css-blend-modes/ */
+    mix-blend-mode: multiply;
   }
   
 </style>
