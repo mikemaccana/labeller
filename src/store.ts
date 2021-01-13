@@ -20,7 +20,8 @@ export interface Annotation {
   end: number;
   text: string;
   label: Label;
-  // Extra hidden field
+  // Extra hidden field - it makes sense to store the highlights with the annotations.
+  // The exporter will remove this field later
   _highLightPositions: any[];
 }
 

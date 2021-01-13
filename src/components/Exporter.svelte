@@ -23,6 +23,10 @@
 </section>
 
 <style>
+
+  section {
+    height: 400px;
+  }
   textarea {
     width: 100%;
     height: 100%;

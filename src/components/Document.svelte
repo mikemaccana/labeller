@@ -20,13 +20,17 @@
     'KeyM': Label.Misc, 
   }
 
-  const COLORS_FOR_KEYS = {}
-  COLORS_FOR_KEYS[Label.Organisation] = ''
-
   let highlights: Annotation[];
 	annotations.subscribe(value => {
 		highlights = value;
-	});
+  });
+  
+  // UI offsets for highlights
+  // TODO: calculate dynamically
+  const X_OFFSET = 165
+  const Y_OFFSET = 95
+  // Add a little extra width to
+  const EXTRA_WIDTH = 2
 
   function clearSelection(){
     window.getSelection().empty()
@@ -46,7 +50,7 @@
     selectionEnd = end
     selectedText = selection.toString()
 
-    // https://stackoverflow.com/questions/5143534/how-to-get-the-position-of-text-within-an-element
+    // https://developer.mozilla.org/en-US/docs/Web/API/Document/createRange
     const parentElement = selection.anchorNode
     const range = document.createRange();
     range.setStart(parentElement, start);
@@ -139,9 +143,9 @@
       {#each highlight._highLightPositions as highlightPosition, index}
         <div class="annotation" style="
           position: absolute; 
-          top: {highlightPosition.top - 95}px; 
-          left: {highlightPosition.left - 163}px; 
-          width: {highlightPosition.width}px; 
+          top: {highlightPosition.top - Y_OFFSET}px; 
+          left: {highlightPosition.left - X_OFFSET}px; 
+          width: {highlightPosition.width + EXTRA_WIDTH}px; 
           height: {highlightPosition.height}px; 
           color: var(--{labelColors[highlight.label]}); 
           background-color: var(--{labelColors[highlight.label]}-light); 
