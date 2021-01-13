@@ -118,7 +118,7 @@
     }
 
     highlightRectangles.forEach((highlightRectangle) => {
-      annotation._highLightPositions = [...highlightRectangles, {
+      annotation._highLightPositions = [...annotation._highLightPositions, {
         // https://developer.mozilla.org/en-US/docs/Web/API/DOMRect
         top: Math.round(highlightRectangle.top),
         bottom: Math.round(highlightRectangle.bottom),
