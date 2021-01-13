@@ -7,7 +7,7 @@
     value.forEach((annotation) => {
       cleaned.push({
         start: annotation.start,
-        end: annotation.start,
+        end: annotation.end,
         text: annotation.text,
         label: annotation.label,
       })
