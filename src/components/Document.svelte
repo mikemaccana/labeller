@@ -1,6 +1,7 @@
 <script lang="ts">
   import { annotations, Label, text } from '../store';
   import type {Annotation} from '../store';
+  import { labelColors } from '../constants';
   const log = console.log.bind(console)
 
   let isTextSelected = false
@@ -23,7 +24,6 @@
   COLORS_FOR_KEYS[Label.Organisation] = ''
 
   let highlights: Annotation[];
-
 	annotations.subscribe(value => {
 		highlights = value;
 	});
@@ -126,8 +126,6 @@
 
   :global(.annotation) {
     opacity: 0.5;
-    background-color: red;
-
   }
   
 </style>
@@ -142,10 +140,12 @@
         <div class="annotation" style="
           position: absolute; 
           top: {highlightPosition.top - 95}px; 
-          left: {highlightPosition.left - 165}px; 
+          left: {highlightPosition.left - 163}px; 
           width: {highlightPosition.width}px; 
           height: {highlightPosition.height}px; 
-        ">{highlight.label}
+          color: var(--{labelColors[highlight.label]}); 
+          background-color: var(--{labelColors[highlight.label]}-light); 
+        ">
 
         </div>
       {/each}
