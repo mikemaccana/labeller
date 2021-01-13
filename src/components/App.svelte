@@ -1,18 +1,26 @@
 <script lang="ts">
-	export let name: string;
+	import Document from "./Document.svelte" 
+	import Labeller from "./Labeller.svelte" 
 </script>
 
 <main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+	<Document />
+	<Labeller />
 </main>
 
 <style>
+
+	:root {
+		--single-column-text-max: 850px;
+		--labeller-width: 250px;
+	}
 	main {
 		text-align: center;
 		padding: 1em;
 		max-width: 240px;
 		margin: 0 auto;
+		display: grid;
+		grid-template-columns: var(--single-column-text-max) var(--labeller-width);
 	}
 
 	h1 {
