@@ -35,6 +35,9 @@
     Y_OFFSET = Math.round(articlePosition.y)
   });
 
+  // Give highlights a little extra room at the top
+  const ROOM_FOR_LABEL = 6;
+
   function clearSelection(){
     window.getSelection().empty()
       isTextSelected = false
@@ -181,6 +184,16 @@
     justify-content: center;
     align-content: center;
   }
+
+  .annotation label {
+    text-transform: uppercase;
+    position: absolute;
+    left: 2px;
+    top: -1px;
+    font-size: 8px;
+    font-family: var(--ui-font);
+    font-weight: bold;
+  }
   
 </style>
 
@@ -192,14 +205,16 @@
       {#each annotation._highLightPositions as highlightPosition}
         <div class="annotation" style="
           position: absolute; 
-          top: {highlightPosition.top - Y_OFFSET}px; 
+          top: {highlightPosition.top - Y_OFFSET - ROOM_FOR_LABEL}px; 
           left: {highlightPosition.left - X_OFFSET}px; 
           width: {highlightPosition.width}px; 
-          height: {highlightPosition.height}px; 
+          height: {highlightPosition.height + ROOM_FOR_LABEL}px; 
           color: var(--{labelColors[annotation.label]}); 
           background-color: var(--{labelColors[annotation.label]}-light); 
         "
         >
+          <!-- svelte-ignore a11y-label-has-associated-control -->
+          <label style="color: var(--{labelColors[annotation.label]}); ">{annotation.label}</label>
           <button on:click={() => deleteAnnotation(annotationIndex)}>×</button>
 
         </div>

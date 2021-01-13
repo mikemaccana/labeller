@@ -13,6 +13,8 @@ html, body {
 	--pink-light:#f7d5ff;
 	--mint:#41b02b;
 	--mint-light:#e6ffd5;
+
+	--ui-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
 /* https://www.paulirish.com/2012/box-sizing-border-box-ftw/ */
@@ -28,7 +30,7 @@ body {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+	font-family: var(--ui-font);
 }
 
 a {
