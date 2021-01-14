@@ -19,6 +19,7 @@
     display: grid;
     grid-auto-flow: column;
     grid-template-columns: 70px auto; 
+    border-radius: 4px;
   }
 
   .key {
