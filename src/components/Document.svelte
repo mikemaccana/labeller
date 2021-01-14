@@ -185,6 +185,7 @@
     justify-content: center;
     align-content: center;
     border: none;
+    cursor: pointer;
   }
 
   .annotation label {
