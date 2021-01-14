@@ -167,6 +167,7 @@
     /* Make highlight slightly bigger than words */
     transform: scale(1.03);
     border-radius: 4px;
+    overflow: hidden;
   }
 
   .annotation button {
@@ -174,15 +175,16 @@
     font-size: 10px;
     height: 10px;
     width: 10px;
-    border-radius: 50%;
     margin: 0;
     padding: 0 0 1px 0;
+    background-color: transparent;
     position: absolute;
-    right: -5px;
-    top: -5px;
+    right: 0;
+    top: 0;
     display: grid;
     justify-content: center;
     align-content: center;
+    border: none;
   }
 
   .annotation label {
@@ -193,6 +195,7 @@
     font-size: 8px;
     font-family: var(--ui-font);
     font-weight: bold;
+    text-overflow: ellipsis;
   }
   
 </style>
@@ -215,7 +218,7 @@
         >
           <!-- svelte-ignore a11y-label-has-associated-control -->
           <label style="color: var(--{labelColors[annotation.label]}); ">{annotation.label}</label>
-          <button on:click={() => deleteAnnotation(annotationIndex)}>×</button>
+          <button style="background-color: var(--{labelColors[annotation.label]}-light);" on:click={() => deleteAnnotation(annotationIndex)}>×</button>
 
         </div>
       {/each}
